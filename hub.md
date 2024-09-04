@@ -67,4 +67,9 @@ This event is triggered when an Apify scraping task is completed.
 - `type`: Type of scraping task. Can be useful to create filter on events
 - `data`:
   - `defaultDatasetId`: ID of the dataset with scraping results.
-  - `results`: Scraping results. The structure depends on the choosen scraping. See this video to know more about it :
+  - `results`: Scraping results. The structure depends on the choosen scraping. See the presentation video to know more about it
+
+Some exemples :
+Website text : `{{event.payload.data.results.items[0].text}}`
+Instagram profile : `{{event.payload.data.results.items[0].biography}}`
+Youtube : `{{event.payload.data.results.items[0].title}}`
