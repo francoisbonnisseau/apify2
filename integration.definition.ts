@@ -17,7 +17,7 @@ const youtubeUrlDescription = "Enter a link to a YouTube video, channel, playlis
 
 export default new IntegrationDefinition({
   name: integrationName ?? name,
-  version: '2.0.0',
+  version: '2.0.1',
   icon: 'icon.svg',
   title: 'Apify Web Scraping',
   description: 'Integrate Apify to perform web scraping directly within your chatbot conversations',
