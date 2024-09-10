@@ -10,7 +10,6 @@ type ScrapeYoutubeOutput = bp.actions.scrapeYoutube.output.Output
 
 export default new bp.Integration({
   register: async (args) => {
-    const apiKey = args.ctx.configuration.apiKey;
     try {
       // Initialize the Apify client
       const client = getSimpleApiConfig(args.ctx.configuration.apiKey);
