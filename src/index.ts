@@ -9,7 +9,25 @@ type ScrapeInstagramOutput = bp.actions.scrapeInstagram.output.Output
 type ScrapeYoutubeOutput = bp.actions.scrapeYoutube.output.Output
 
 export default new bp.Integration({
-  register: async () => {},
+  register: async (args) => {
+    const apiKey = args.ctx.configuration.apiKey;
+    try {
+      // Initialize the Apify client
+      const client = getSimpleApiConfig(args.ctx.configuration.apiKey);
+
+      // Fetch the user profile
+      const userProfile = await client.user().get();
+      
+      if (!userProfile) {
+        throw new sdk.RuntimeError('Invalid API token');
+      }
+      
+      args.logger.forBot().info('API token verified successfully');
+    } catch (error:any) {
+      args.logger.forBot().error('Error verifying API token', error.message);
+      throw new sdk.RuntimeError('Error verifying API token', error);
+    }
+  },
   unregister: async () => {},
   actions: {
     scrapeWebsite : async (args) => {
@@ -30,7 +48,6 @@ export default new bp.Integration({
         // Run the Apify actor
         const run = await client.actor('apify/website-content-crawler').start(input);
         return { runId: run.defaultDatasetId };
-        // return {runId: 'test'};
       } catch (error: any) {
         args.logger.forBot().error('Error during scraping', error.message);
         throw new sdk.RuntimeError('Unexpected error during API call', error);
